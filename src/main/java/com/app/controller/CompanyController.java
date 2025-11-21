@@ -16,9 +16,9 @@ public class CompanyController {
     private final CompanyService service;
 
     @PostMapping
-    public Mono<ResponseEntity<Company>> createCompany(@RequestBody Company company) {
+    public Mono<ResponseEntity<String>> createCompany(@RequestBody Company company) {
         return service.createCompany(company)
-                .map(created -> ResponseEntity.status(HttpStatus.CREATED).body(created))
+                .map(created -> ResponseEntity.status(HttpStatus.CREATED).body(created.getId()))
                 .onErrorResume(error ->
                         Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build())
                 );
